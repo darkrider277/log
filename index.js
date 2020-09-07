@@ -152,7 +152,7 @@ app.post('/', (req, res) => {
     .then(r => statusRespone = r)
   .catch(e => console.log(e))
 
-  res.send(statusRespone)
+  res.send(json)
 })
 
 app.listen(8000, () => {
