@@ -32,7 +32,7 @@ app.post('/', upload.single('file'), (req, res) => {
   csv()
     .fromFile(__basedir + '/file/' + req.file.filename)
     .then((obj) => {
-      
+
       Promise.all(
         obj.map(async (item, index) => {
           ret = await handleCSV(item)
@@ -40,10 +40,10 @@ app.post('/', upload.single('file'), (req, res) => {
           statusArray.push(ret)
         })
       ).then(() => res.send(statusArray))
-      
+
     })
     .catch((e) => console.log(e))
-    
+
 })
 
 app.listen(8000, () => {
@@ -212,9 +212,9 @@ const handleCSV = async (item) => {
   json.severity = Number(severity)
   json.direction = Number(logObject[direction + 1])
   json.dest_ip = logObject[dest_ip + 1]
-  json.dest_port = Number(d[dpt_index + 1].split(' ')[0])
+  json.dest_port = Number(d[dpt_index + 1].split(' ')[0]) > 0 || Number(d[dpt_index + 1].split(' ')[0]) ? Number(d[dpt_index + 1].split(' ')[0]) : 6969
   json.src_ip = logObject[src_ip + 1]
-  json.src_port = Number(d[spt_index + 1].split(' ')[0])>0? Number(d[spt_index + 1].split(' ')[0]):53
+  json.src_port = Number(d[spt_index + 1].split(' ')[0]) > 0 || Number(d[spt_index + 1].split(' ')[0]) ? Number(d[spt_index + 1].split(' ')[0]) : 53
   json.proto = logObject[proto + 1]
   json.domain = logObject[domain + 1]
   json.host = "CYQPTL"
@@ -239,11 +239,11 @@ const handleCSV = async (item) => {
     { headers: { "Authorization": "Basic JVWYM92QXPVBGHPP", "Content-Type": "application/json" } }
   )
     .then(r => {
-      statusRespone = r  
+      statusRespone = r
       console.log(json)
     })
     .catch(e => {
-      statusRespone = e 
+      statusRespone = e
       console.log(json)
     })
   return (statusRespone.data)
