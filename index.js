@@ -26,18 +26,25 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post('/', upload.single('file'), (req, res) => {
-  var statusArray = []
+  var statusArray = {}
   var ret = {}
+  var countSuccess = 0
+  var countFail = 0
 
   csv()
     .fromFile(__basedir + '/file/' + req.file.filename)
     .then((obj) => {
-
       Promise.all(
         obj.map(async (item, index) => {
           ret = await handleCSV(item)
-          console.log(index)
-          statusArray.push(ret)
+          if(ret === 200) {
+            countSuccess++
+          }
+          else {
+            countFail++
+          }
+          statusArray.countSuccess = countSuccess
+          statusArray.countFail = countFail
         })
       ).then(() => res.send(statusArray))
 
@@ -246,6 +253,6 @@ const handleCSV = async (item) => {
       statusRespone = e
       console.log(json)
     })
-  return (statusRespone.data)
+  return (statusRespone.data.code)
 
 }
