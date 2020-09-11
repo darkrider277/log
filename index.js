@@ -214,6 +214,7 @@ app.post('/',(req, res) => {
     .catch(e => {
       statusRespone = e
       console.log(json)
+	  console.log(e)
 	  res.send(e)
     })
 })
