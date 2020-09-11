@@ -13,8 +13,8 @@ app.listen(4000, () => {
 });
 
 app.post('/',(req, res) => {
-  console.log(req.body)
-  var raw = req.body.log
+  console.log(req)
+  /*var raw = req.body.log
   var b = raw.split('|')
   var c = b[b.length - 1]
   var d = c.split('=')
@@ -72,56 +72,6 @@ app.post('/',(req, res) => {
   var lon = logObject.findIndex(ele => ele == "dlong")
   var ip = logObject.findIndex(ele => ele == "dvc")
 
-  /*var indexCate = logObject[category - 1].split('-')[0]
-  switch (indexCate) {
-    case 'IA':
-      category = 1;
-      break;
-
-    case 'E':
-      category = 2;
-      break;
-
-    case 'P':
-      category = 3;
-      break;
-
-    case 'PE':
-      category = 4;
-      break;
-
-    case 'DE':
-      category = 5;
-      break;
-
-    case 'CA':
-      category = 6;
-      break;
-
-    case 'D':
-      category = 7;
-      break;
-
-    case 'LM':
-      category = 8;
-      break;
-
-    case 'C':
-      category = 9;
-      break;
-
-    case 'CC':
-      category = 10;
-      break;
-
-    case 'I':
-      category = 12;
-      break;
-
-    default:
-      category = 11;
-      break;
-  }*/
 
   //handling tags and geoip
   var tags = 1
@@ -212,5 +162,5 @@ app.post('/',(req, res) => {
       console.log(json)
 	  res.send(e)
     })
-
+ */
 })
