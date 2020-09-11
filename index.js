@@ -199,8 +199,8 @@ app.post('/',(req, res) => {
     }
   }
   var statusRespone = ""
+  console.log(json)
   if(json.dest_ip !== "" && json.src_ip !== ""){
-	console.log(json)
 	var a = axios.put(
     "https://api.soc.gov.vn/api/v1/alerts",
     json,
@@ -216,5 +216,8 @@ app.post('/',(req, res) => {
 	  console.log("Loi")
 	  res.send(e)
     })  
-  } 
+  }
+  else{
+	  console.log("Sai dinh dang")
+  }
 })
