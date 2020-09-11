@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 var axios = require('axios')
 var bodyParser = require('body-parser');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
