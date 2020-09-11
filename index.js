@@ -9,10 +9,11 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 app.listen(4000, () => {
-  console.log('Example app listening on port 8000!')
+  console.log('Example app listening on port 4000!')
 });
 
-app.post('/log',(req, res) => {
+app.post('/',(req, res) => {
+  console.log(req)
   var raw = req.body.log
   var b = raw.split('|')
   var c = b[b.length - 1]
