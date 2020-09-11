@@ -59,9 +59,9 @@ app.post('/',(req, res) => {
 
   //handling fields available in logObject
   var timestamp = logObject.findIndex(ele => ele == "rt")
-  // var category = logObject.findIndex(ele => ele == "cs4")
+  var category1 = logObject.findIndex(ele => ele == "cs6")
   var action = logObject.findIndex(ele => ele == "act")
-  var signature = logObject.findIndex(ele => ele == "categorySignificance")
+  //var signature = logObject.findIndex(ele => ele == "fname")
   var dest_ip = logObject.findIndex(ele => ele == "dst")
   var src_ip = logObject.findIndex(ele => ele == "src")
   var proto = logObject.findIndex(ele => ele == "proto")
@@ -71,6 +71,10 @@ app.post('/',(req, res) => {
   var lat = logObject.findIndex(ele => ele == "dlat")
   var lon = logObject.findIndex(ele => ele == "dlong")
   var ip = logObject.findIndex(ele => ele == "dvc")
+  
+  var signature_index = d.findIndex(ele => ele.includes(" fname"))
+  var sign = d[signature_index + 1].split(' ')
+  sign!==null&&sign!==undefined&&sign.pop()
 
 
   //handling tags and geoip
@@ -112,6 +116,56 @@ app.post('/',(req, res) => {
       jsonAction = 6;
       break;
   }
+  var category_raw = logObject[category1+1]
+  var category = 1
+	if (category_raw.match(/T1078|T1091|T1189|T1190|T1192|T1193|T1200/))
+	{
+	category = 1;
+	}
+	if (category_raw.match(/T1028|T1035|T1047|T1053|T1059|T1061|T1064|T1072|T1085|T1086|T1117|T1118|T1121|T1127|T1129|T1151|T1168|T1170|T1173|T1175|T1191|T1196|T1203|T1204|T1216|T1218|T1220|T1223/))
+	{
+	category = 2;
+	}
+	if (category_raw.match(/T1031|T1034|T1038|T1050|T1053|T1060|T1078|T1098|T1136|T1168|T1179|T1183|T1215/))
+	{
+	category = 3;
+	}
+	if (category_raw.match(/T1055|T1068|T1088/))
+	{
+	category = 4;
+	}
+	if (category_raw.match(/T1036|T1045|T1064|T1089|T1090|T1093|T1107|T1112|T1127|T1140/))
+	{
+	category = 5;
+	}
+	if (category_raw.match(/T1003|T1040|T1110|T1503/))
+	{
+	category = 6;
+	}
+	if (category_raw.match(/T1012|T1016|T1018|T1046|T1057|T1063|T1083|T1087|T1201|T1518/))
+	{
+	category = 7;
+	}
+	if (category_raw.match(/T1075|T1076|T1077|T1091|T1210/))
+	{
+	category = 8;
+	}
+	if (category_raw.match(/T1039|T1056|T1113|T1114|T1115/))
+	{
+	category = 9;
+	}
+	if (category_raw.match(/T1002|T1048|T1052/))
+	{
+	category = 10;
+	}
+	if (category_raw.match(/T1132|T1188|T1483/))
+	{
+	category = 11;
+	}
+	if (category_raw.match(/T1486|T1489|T1490|T1498/))
+	{
+	category = 12;
+	}
 
 
   //handling json server return object 
@@ -122,14 +176,14 @@ app.post('/',(req, res) => {
   json.sensor_id = '5f50a0255f627d06738587ee'
   json.category = 1
   json.action = jsonAction
-  json.signature = logObject[signature + 1]
+  json.signature = sign===""?sign:sign.join(" ")
   json.severity = Number(severity)
   json.direction = Number(logObject[direction + 1])
   json.dest_ip = logObject[dest_ip + 1]
-  json.dest_port = Number(d[dpt_index + 1].split(' ')[0]) > 0 || Number(d[dpt_index + 1].split(' ')[0]) ? Number(d[dpt_index + 1].split(' ')[0]) : 53
+  json.dest_port = Number(d[dpt_index + 1].split(' ')[0]) > 0 || Number(d[dpt_index + 1].split(' ')[0]) ? Number(d[dpt_index + 1].split(' ')[0]) : 1
   json.src_ip = logObject[src_ip + 1]
-  json.src_port = Number(d[spt_index + 1].split(' ')[0]) > 0 || Number(d[spt_index + 1].split(' ')[0]) ? Number(d[spt_index + 1].split(' ')[0]) : 53
-  json.proto = logObject[proto + 1]
+  json.src_port = Number(d[spt_index + 1].split(' ')[0]) > 0 || Number(d[spt_index + 1].split(' ')[0]) ? Number(d[spt_index + 1].split(' ')[0]) : 1
+  json.proto = logObject[proto + 1]!==""?logObject[proto + 1]:"UNDEFINED"
   json.domain = logObject[domain + 1]
   json.host = "CYQPTL"
   json.tags = tags
