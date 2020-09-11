@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
-app.use(bodyParser.raw());
+app.use(bodyParser.text());
 
 app.listen(4000, () => {
   console.log('Example app listening on port 4000!')
