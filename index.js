@@ -13,7 +13,7 @@ app.listen(4000, () => {
 });
 
 app.post('/',(req, res) => {
-  console.log(req)
+  console.log(req.body)
   var raw = req.body.log
   var b = raw.split('|')
   var c = b[b.length - 1]
