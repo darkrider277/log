@@ -13,8 +13,8 @@ app.listen(4000, () => {
 });
 
 app.post('/',(req, res) => {
-  console.log(req)
-  /*var raw = req.body.log
+  console.log(req.body)
+  var raw = req.body
   var b = raw.split('|')
   var c = b[b.length - 1]
   var d = c.split('=')
@@ -126,7 +126,7 @@ app.post('/',(req, res) => {
   json.severity = Number(severity)
   json.direction = Number(logObject[direction + 1])
   json.dest_ip = logObject[dest_ip + 1]
-  json.dest_port = Number(d[dpt_index + 1].split(' ')[0]) > 0 || Number(d[dpt_index + 1].split(' ')[0]) ? Number(d[dpt_index + 1].split(' ')[0]) : 6969
+  json.dest_port = Number(d[dpt_index + 1].split(' ')[0]) > 0 || Number(d[dpt_index + 1].split(' ')[0]) ? Number(d[dpt_index + 1].split(' ')[0]) : 53
   json.src_ip = logObject[src_ip + 1]
   json.src_port = Number(d[spt_index + 1].split(' ')[0]) > 0 || Number(d[spt_index + 1].split(' ')[0]) ? Number(d[spt_index + 1].split(' ')[0]) : 53
   json.proto = logObject[proto + 1]
@@ -154,7 +154,7 @@ app.post('/',(req, res) => {
   )
     .then(r => {
       statusRespone = r.data
-      console.log(json)
+      console.log(statusRespone)
 	  res.send(statusRespone)
     })
     .catch(e => {
@@ -162,5 +162,4 @@ app.post('/',(req, res) => {
       console.log(json)
 	  res.send(e)
     })
- */
 })
