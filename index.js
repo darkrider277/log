@@ -14,7 +14,6 @@ app.listen(4000, () => {
 });
 
 app.post('/',(req, res) => {
-  console.log(req.body)
   var raw = req.body
   var b = raw.split('|')
   var c = b[b.length - 1]
@@ -199,23 +198,23 @@ app.post('/',(req, res) => {
       ip: logObject[ip + 1],
     }
   }
-
   var statusRespone = ""
-
-  var a = axios.put(
+  if(json.dest_ip !== "" && json.src_ip !== ""){
+	console.log(json)
+	var a = axios.put(
     "https://api.soc.gov.vn/api/v1/alerts",
     json,
     { headers: { "Authorization": "Basic JVWYM92QXPVBGHPP", "Content-Type": "application/json" } }
   )
     .then(r => {
       statusRespone = r.data
-      console.log(statusRespone)
+      console.log("Thanh cong")
 	  res.send(statusRespone)
     })
     .catch(e => {
       statusRespone = e
-      console.log(json)
-	  console.log(e)
+	  console.log("Loi")
 	  res.send(e)
-    })
+    })  
+  } 
 })
