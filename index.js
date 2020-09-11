@@ -1,64 +1,19 @@
 const express = require('express')
 const app = express();
-const axios = require('axios')
-const bodyParser = require('body-parser')
-const multer = require('multer');
-const csv = require('csvtojson')
+var axios = require('axios')
+
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
-  limit: "50mb",
-  extended: true,
-  parameterLimit: 50000
+  extended: false,
 }));
 
-global.__basedir = __dirname;
-
-// -> Multer Upload Storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, __basedir + '/file')
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname)
-  }
-});
-
-const upload = multer({ storage: storage });
-
-app.post('/', upload.single('file'), (req, res) => {
-  var statusArray = {}
-  var ret = {}
-  var countSuccess = 0
-  var countFail = 0
-
-  csv()
-    .fromFile(__basedir + '/file/' + req.file.filename)
-    .then((obj) => {
-      Promise.all(
-        obj.map(async (item, index) => {
-          ret = await handleCSV(item)
-          if(ret === 200) {
-            countSuccess++
-          }
-          else {
-            countFail++
-          }
-          statusArray.countSuccess = countSuccess
-          statusArray.countFail = countFail
-        })
-      ).then(() => res.send(statusArray))
-
-    })
-    .catch((e) => console.log(e))
-
-})
-
-app.listen(8000, () => {
+app.listen(4000, () => {
   console.log('Example app listening on port 8000!')
 });
 
-const handleCSV = async (item) => {
-  var b = item["Raw Message"].split('|')
+app.post('/log', (req, res) => {
+  var raw = req.body.log
+  var b = raw.split('|')
   var c = b[b.length - 1]
   var d = c.split('=')
 
@@ -238,7 +193,7 @@ const handleCSV = async (item) => {
     }
   }
 
-  var statusRespone = 0
+  var statusRespone = ""
 
   var a = await axios.put(
     "https://api.soc.gov.vn/api/v1/alerts",
@@ -246,13 +201,14 @@ const handleCSV = async (item) => {
     { headers: { "Authorization": "Basic JVWYM92QXPVBGHPP", "Content-Type": "application/json" } }
   )
     .then(r => {
-      statusRespone = r
+      statusRespone = r.data
       console.log(json)
+	  res.send(statusRespone)
     })
     .catch(e => {
       statusRespone = e
       console.log(json)
+	  res.send(e)
     })
-  return (statusRespone.data.code)
 
 }
