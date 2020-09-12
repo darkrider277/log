@@ -200,7 +200,7 @@ app.post('/',(req, res) => {
   }
   var statusRespone = ""
   console.log(json)
-  if(json.dest_ip !== "" && json.src_ip !== ""){
+  if(json.dest_ip !== "" && json.src_ip !== "" && !json.proto.includes(":")){
 	var a = axios.put(
     "https://api.soc.gov.vn/api/v1/alerts",
     json,
