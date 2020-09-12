@@ -209,15 +209,16 @@ app.post('/',(req, res) => {
     .then(r => {
       statusRespone = r.data
       console.log("Thanh cong")
-	  res.send(statusRespone)
+	  res.send("Thanh cong")
     })
     .catch(e => {
       statusRespone = e
 	  console.log("Loi")
-	  res.send(e)
+	  res.send("Loi")
     })  
   }
   else{
 	  console.log("Sai dinh dang")
+	  res.send("Sai dinh dang")
   }
 })
