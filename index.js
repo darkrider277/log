@@ -171,10 +171,10 @@ app.post('/',(req, res) => {
   //handling json server return object 
   var json = {}
   json.timestamp = Number(logObject[timestamp + 1] + ".3590641")
-  json.vendor_id = 'MISOFT_01'
-  json.unit_id = 'MISOFT_01'
-  json.sensor_id = '5f50a0255f627d06738587ee'
-  json.category = 1
+  json.vendor_id = 'xxx.xx.xx.H40'
+  json.unit_id = 'xxx.xx.xx.H40'
+  json.sensor_id = '5cde380651b47a7b1e7271fd'
+  json.category = category
   json.action = jsonAction
   json.signature = sign===""?sign:sign.join(" ")
   json.severity = Number(severity)
@@ -204,7 +204,7 @@ app.post('/',(req, res) => {
 	var a = axios.put(
     "https://api.soc.gov.vn/api/v1/alerts",
     json,
-    { headers: { "Authorization": "Basic JVWYM92QXPVBGHPP", "Content-Type": "application/json" } }
+    { headers: { "Authorization": "Basic V56NZWJAMP5E2J3A", "Content-Type": "application/json" } }
   )
     .then(r => {
       statusRespone = r.data
