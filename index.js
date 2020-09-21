@@ -185,7 +185,7 @@ app.post('/',(req, res) => {
   json.src_port = Number(d[spt_index + 1].split(' ')[0]) > 0 || Number(d[spt_index + 1].split(' ')[0]) ? Number(d[spt_index + 1].split(' ')[0]) : 1
   json.proto = logObject[proto + 1]!==""?logObject[proto + 1]:"UNDEFINED"
   json.domain = logObject[domain + 1]
-  json.host = "CYQPTL"
+  json.host = "arcsight"
   json.tags = tags
   if (tags == 1) {
     json.geoip = {
